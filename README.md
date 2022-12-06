@@ -35,4 +35,3 @@ CREATE USER test WITH PASSWORD 'test';
 CREATE DATABASE libraryapp_dev;
 CREATE DATABASE libraryapp_test;
 ```
-
