@@ -7,10 +7,13 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -33,11 +36,14 @@ public class BookEntity {
 
   private String author;
 
+  @Enumerated(EnumType.STRING)
   private Genre genre;
 
   private boolean isActive;
 
   private String uuid = UUID.randomUUID().toString();
+
+  @Version private Long version;
 
   @Override
   public boolean equals(Object o) {
