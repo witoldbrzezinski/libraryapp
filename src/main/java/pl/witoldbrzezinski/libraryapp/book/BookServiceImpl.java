@@ -14,6 +14,8 @@ public class BookServiceImpl implements BookService {
 
   private final BookMapper bookMapper;
 
+  private final IsbnValidator isbnValidator;
+
   @Override
   public List<BookDTOResponse> getAll() {
     return bookRepository.findAll().stream().map(bookMapper::toDTO).toList();
@@ -28,6 +30,9 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public BookDTOResponse save(BookDTORequest bookDTORequest) {
+    if(!isbnValidator.validateIsbn10Or13(bookDTORequest.getIsbn())){
+      throw new InvalidIsbnException(bookDTORequest.getIsbn());
+    }
     if (bookRepository.existsByIsbn(bookDTORequest.getIsbn())) {
       throw new BookAlreadyExistException(bookDTORequest.getIsbn());
     }
