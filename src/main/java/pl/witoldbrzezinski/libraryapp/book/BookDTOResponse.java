@@ -26,6 +26,6 @@ public class BookDTOResponse {
   @NotNull
   private Genre genre;
 
-  private boolean isActive;
+  private boolean isDeleted;
   private Long version;
 }

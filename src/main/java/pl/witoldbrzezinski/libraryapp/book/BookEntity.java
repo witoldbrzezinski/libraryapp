@@ -23,7 +23,7 @@ import java.util.UUID;
 @Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "is_active = false")
+@Where(clause = "is_deleted = false")
 public class BookEntity {
 
   @Id
@@ -39,7 +39,7 @@ public class BookEntity {
   @Enumerated(EnumType.STRING)
   private Genre genre;
 
-  private boolean isActive;
+  private boolean isDeleted;
 
   private String uuid = UUID.randomUUID().toString();
 

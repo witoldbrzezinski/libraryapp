@@ -4,8 +4,8 @@ CREATE TABLE books (
     title VARCHAR (255) NOT NULL,
     author VARCHAR (150) NOT NULL,
     genre VARCHAR (50) NOT NULL,
-    is_active boolean NOT NULL DEFAULT false,
+    is_deleted boolean NOT NULL DEFAULT false,
     uuid VARCHAR(36) NOT NULL,
-    version BIGINT DEFAULT 1
+    version BIGINT DEFAULT 0
  );
 
