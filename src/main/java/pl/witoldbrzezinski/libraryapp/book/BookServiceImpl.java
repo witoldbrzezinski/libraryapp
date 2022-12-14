@@ -30,13 +30,14 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public BookDTOResponse save(BookDTORequest bookDTORequest) {
-    if(!isbnValidator.validateIsbn10Or13(bookDTORequest.getIsbn())){
+    if (bookRepository.existsByIsbn(bookDTORequest.getIsbn())) {
+      throw new BookAlreadyExistException(bookDTORequest.getIsbn().replaceAll("-", ""));
+    }
+    if (!isbnValidator.validateIsbn10Or13(bookDTORequest.getIsbn().replaceAll("-", ""))) {
       throw new InvalidIsbnException(bookDTORequest.getIsbn());
     }
-    if (bookRepository.existsByIsbn(bookDTORequest.getIsbn())) {
-      throw new BookAlreadyExistException(bookDTORequest.getIsbn());
-    }
     BookEntity bookEntity = bookMapper.toEntity(bookDTORequest);
+    bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
     bookRepository.save(bookEntity);
     return bookMapper.toDTO(bookEntity);
   }
@@ -46,7 +47,11 @@ public class BookServiceImpl implements BookService {
   public BookDTOResponse update(Long id, BookDTORequest bookDTORequest) {
     BookEntity bookEntity =
         bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-    bookEntity.setIsbn(bookDTORequest.getIsbn());
+    if (!isbnValidator.validateIsbn10Or13(bookDTORequest.getIsbn())) {
+      throw new InvalidIsbnException(bookDTORequest.getIsbn());
+    } else {
+      bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
+    }
     bookEntity.setTitle(bookDTORequest.getTitle());
     bookEntity.setAuthor(bookDTORequest.getAuthor());
     bookEntity.setGenre(bookDTORequest.getGenre());

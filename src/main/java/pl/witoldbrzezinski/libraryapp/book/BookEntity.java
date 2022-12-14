@@ -39,6 +39,8 @@ public class BookEntity {
   @Enumerated(EnumType.STRING)
   private Genre genre;
 
+  private Integer quantity;
+
   private boolean isDeleted;
 
   private String uuid = UUID.randomUUID().toString();
