@@ -16,12 +16,13 @@ Spring Boot application for library.
 - docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=YOURPASSWORD postgres:15.1
 ```
 
-#### Creating Postgres role :
+#### Creating Postgres roles :
 
 - Run SQL command:
 
 ```
 CREATE USER dev WITH PASSWORD 'dev';
+CREATE USER test WITH PASSWORD 'test';
 ```
 
 #### Creating database
@@ -29,4 +30,5 @@ CREATE USER dev WITH PASSWORD 'dev';
 
 ```
 CREATE DATABASE libraryapp_dev;
+CREATE DATABASE libraryapp_test;
 ```

@@ -24,7 +24,8 @@ public class BookDTORequest {
   @Enumerated(EnumType.STRING)
   @NotNull
   private Genre genre;
+
   @NotNull
-  @Min(value=0,message = "Quantity must be positive")
+  @Min(value = 0, message = "Quantity must be positive")
   private Integer quantity;
 }

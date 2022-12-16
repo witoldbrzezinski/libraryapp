@@ -41,8 +41,9 @@ public class BookController {
   @PutMapping("{id}")
   @ResponseStatus(HttpStatus.OK)
   public void update(@PathVariable Long id, @Valid @RequestBody BookDTORequest bookDTORequest) {
-    bookService.update(id,bookDTORequest);
+    bookService.update(id, bookDTORequest);
   }
+
   @DeleteMapping("{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable Long id) {
