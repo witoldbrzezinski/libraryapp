@@ -33,7 +33,7 @@ public class BookServiceImpl implements BookService {
     if (bookRepository.existsByIsbn(bookDTORequest.getIsbn())) {
       throw new BookAlreadyExistException(bookDTORequest.getIsbn().replaceAll("-", ""));
     }
-    if (!isbnValidator.validateIsbn10Or13(bookDTORequest.getIsbn().replaceAll("-", ""))) {
+    if (!isbnValidator.isValid(bookDTORequest.getIsbn().replaceAll("-", ""))) {
       throw new InvalidIsbnException(bookDTORequest.getIsbn());
     }
     BookEntity bookEntity = bookMapper.toEntity(bookDTORequest);
@@ -47,7 +47,7 @@ public class BookServiceImpl implements BookService {
   public BookDTOResponse update(Long id, BookDTORequest bookDTORequest) {
     BookEntity bookEntity =
         bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-    if (!isbnValidator.validateIsbn10Or13(bookDTORequest.getIsbn())) {
+    if (!isbnValidator.isValid(bookDTORequest.getIsbn())) {
       throw new InvalidIsbnException(bookDTORequest.getIsbn());
     } else {
       bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));

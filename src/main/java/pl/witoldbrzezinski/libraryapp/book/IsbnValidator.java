@@ -14,7 +14,6 @@ public class IsbnValidator {
     if (isbn == null) {
       return false;
     }
-
     if (isbn.length() != NEW_ISBN_LENGTH) {
       return false;
     }
@@ -58,12 +57,14 @@ public class IsbnValidator {
   }
 
   private String replaceAllHyphens(String isbn) {
+    if (isbn == null) {
+      return "";
+    }
     return isbn.replaceAll("-", "");
   }
 
-  boolean validateIsbn10Or13(String isbn) {
+  boolean isValid(String isbn) {
     String parsedIsbn = replaceAllHyphens(isbn);
-    System.out.println(parsedIsbn);
     if (parsedIsbn.length() == 13) {
       return validateNewIsbn13(parsedIsbn);
     } else if (parsedIsbn.length() == 10) {
