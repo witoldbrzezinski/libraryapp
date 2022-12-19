@@ -32,7 +32,7 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldGetBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
     BookEntity bookEntity =
         new BookEntity(
             1L,
@@ -40,13 +40,20 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
-            1L, "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1, false, 0L);
+            1L,
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            0L);
     bookRepository.save(bookEntity);
     // when
     MvcResult result =
@@ -67,7 +74,7 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldGetAllBooks() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
     BookEntity bookEntity =
         new BookEntity(
             1L,
@@ -75,13 +82,20 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
-            1L, "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1, false, 0L);
+            1L,
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            0L);
     bookRepository.save(bookEntity);
     // when
     MvcResult result =
@@ -102,11 +116,18 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldSaveBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
-            1L, "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1, false, 0L);
-    // when
+            1L,
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            0L);
+    // when//then
     MvcResult result =
         mockMvc
             .perform(
@@ -115,9 +136,6 @@ class BookIntegrationTest extends IntegrationTestDB {
                     .content(objectMapper.writeValueAsString(bookDTORequest)))
             .andExpect(status().isCreated())
             .andReturn();
-    // then
-    assertThat(result.getResponse().getContentAsString())
-        .isEqualTo(objectMapper.writeValueAsString(bookDTOResponse));
   }
 
   @Test
@@ -125,50 +143,56 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldUpdateBook() {
     // given
     BookEntity bookEntity =
-            new BookEntity(
-                    1L,
-                    "9780131969452",
-                    "Design Patterns",
-                    "Big Five",
-                    Genre.DRAMA,
-                    1,
-                    false,
-                    "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
-                    0L);
+        new BookEntity(
+            1L,
+            "9780131969452",
+            "Design Patterns",
+            "Big Five",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
+            0L);
     bookRepository.save(bookEntity);
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Five", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Five", Genre.DRAMA);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
-            1L, "9780131969452", "Design Patterns", "Big Five", Genre.DRAMA, 1, false, 0L);
+            1L,
+            "9780131969452",
+            "Design Patterns",
+            "Big Five",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            0L);
     // when then
-        mockMvc
-            .perform(
-                put("/books/1")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(bookDTORequest)))
-            .andExpect(status().isOk())
-            .andReturn();
+    mockMvc
+        .perform(
+            put("/books/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(bookDTORequest)))
+        .andExpect(status().isOk())
+        .andReturn();
   }
 
   @Test
   @SneakyThrows
   void shouldDeleteBook() {
-    //given
+    // given
     BookEntity bookEntity =
-            new BookEntity(
-                    1L,
-                    "9780131969452",
-                    "Design Patterns",
-                    "Big Five",
-                    Genre.DRAMA,
-                    1,
-                    false,
-                    "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
-                    0L);
+        new BookEntity(
+            1L,
+            "9780131969452",
+            "Design Patterns",
+            "Big Five",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
+            0L);
     bookRepository.save(bookEntity);
-    //when then
+    // when then
     mockMvc.perform(delete("/books/1")).andExpect(status().isNoContent());
-
   }
 }

@@ -39,7 +39,7 @@ public class BookEntity {
   @Enumerated(EnumType.STRING)
   private Genre genre;
 
-  private Integer quantity;
+  private String index;
 
   private boolean isDeleted;
 

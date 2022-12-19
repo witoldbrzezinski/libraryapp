@@ -41,14 +41,21 @@ class BookServiceImplTest {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     List<BookEntity> books = List.of(bookEntity);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
-            ID, "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1, false, 0L);
+            ID,
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            0L);
     // when
     when(bookRepository.findAll()).thenReturn(books);
     // then
@@ -65,7 +72,7 @@ class BookServiceImplTest {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
@@ -81,7 +88,7 @@ class BookServiceImplTest {
   void shouldSaveBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -89,7 +96,7 @@ class BookServiceImplTest {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
@@ -98,14 +105,14 @@ class BookServiceImplTest {
     // then
     assertThat(bookService.save(bookDTORequest))
         .usingRecursiveComparison()
-        .ignoringFields("id", "version")
+        .ignoringFields("id", "version", "index")
         .isEqualTo(bookMapper.toDTO(bookEntity));
   }
 
   @Test
   void shouldThrowExceptionWhenSavingWithInvalidIsbn() {
     BookDTORequest bookDTORequest =
-        new BookDTORequest("97801", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("97801", "Design Patterns", "Big Four", Genre.DRAMA);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -113,7 +120,7 @@ class BookServiceImplTest {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
@@ -127,7 +134,7 @@ class BookServiceImplTest {
   void shouldNotSaveAlreadyExistingBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
     when(bookRepository.existsByIsbn("9780131969452")).thenReturn(true);
     // when then
     assertThrowsExactly(BookAlreadyExistException.class, () -> bookService.save(bookDTORequest));
@@ -137,7 +144,7 @@ class BookServiceImplTest {
   void shouldUpdateBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -145,7 +152,7 @@ class BookServiceImplTest {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
-            1,
+            "9780131969452-10000",
             false,
             "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
@@ -163,46 +170,44 @@ class BookServiceImplTest {
   void shouldNotUpdateBookWhenIsbnIsIncorrect() {
     // given
     BookDTORequest bookDTORequest =
-            new BookDTORequest("9780131", "Design Patterns", "Big Four", Genre.DRAMA, 1);
+        new BookDTORequest("9780131", "Design Patterns", "Big Four", Genre.DRAMA);
     BookEntity bookEntity =
-            new BookEntity(
-                    ID,
-                    "9780131",
-                    "Design Patterns",
-                    "Big Four",
-                    Genre.DRAMA,
-                    1,
-                    false,
-                    "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
-                    0L);
+        new BookEntity(
+            ID,
+            "9780131",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
+            0L);
     // when
     bookEntity.setAuthor("Big Five");
     when(bookRepository.findById(ID)).thenReturn(Optional.of(bookEntity));
     when(bookRepository.save(bookMapper.toEntity(bookDTORequest))).thenReturn(bookEntity);
-    assertThrowsExactly(InvalidIsbnException.class, () -> bookService.update(ID,bookDTORequest));
+    assertThrowsExactly(InvalidIsbnException.class, () -> bookService.update(ID, bookDTORequest));
     // then
   }
 
   @Test
-  void shouldDeleteBook(){
-    //given
+  void shouldDeleteBook() {
+    // given
     BookEntity bookEntity =
-            new BookEntity(
-                    ID,
-                    "9780131",
-                    "Design Patterns",
-                    "Big Four",
-                    Genre.DRAMA,
-                    1,
-                    false,
-                    "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
-                    0L);
-    //when
+        new BookEntity(
+            ID,
+            "9780131",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            "9780131969452-10000",
+            false,
+            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
+            0L);
+    // when
     when(bookRepository.findById(ID)).thenReturn(Optional.of(bookEntity));
     bookService.delete(ID);
-    //then
+    // then
     assertTrue(bookEntity.isDeleted());
-
   }
-
 }

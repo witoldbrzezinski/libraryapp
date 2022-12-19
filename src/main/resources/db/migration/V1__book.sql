@@ -4,8 +4,7 @@ CREATE TABLE books (
     title VARCHAR (255) NOT NULL,
     author VARCHAR (150) NOT NULL,
     genre VARCHAR (50) NOT NULL,
-    quantity INTEGER NOT NULL,
-    CONSTRAINT quantity_nonnegative CHECK (quantity >=0),
+    index VARCHAR (35) NOT NULL UNIQUE,
     is_deleted boolean NOT NULL DEFAULT false,
     uuid VARCHAR(36) NOT NULL,
     version BIGINT DEFAULT 0

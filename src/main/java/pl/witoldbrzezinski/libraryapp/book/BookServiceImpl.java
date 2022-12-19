@@ -2,6 +2,7 @@ package pl.witoldbrzezinski.libraryapp.book;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.witoldbrzezinski.libraryapp.utils.IndexGenerator;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -38,6 +39,8 @@ public class BookServiceImpl implements BookService {
     }
     BookEntity bookEntity = bookMapper.toEntity(bookDTORequest);
     bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
+    bookEntity.setIndex(
+        bookDTORequest.getIsbn().replaceAll("-", "") + "-" + IndexGenerator.generateRandomIndex());
     bookRepository.save(bookEntity);
     return bookMapper.toDTO(bookEntity);
   }
