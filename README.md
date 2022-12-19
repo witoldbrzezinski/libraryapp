@@ -1,5 +1,6 @@
 ## Library app
 
+
 Spring Boot application for library.
 
 ### Technologies : #
@@ -8,12 +9,14 @@ Spring Boot application for library.
 - Docker (last stable version)
 - Spring Boot 2.7.6
 - Maven 3.8.6
+
 ### Installation : #
 
 - Run PostgreSQL database with docker by using the following command:
 
 ```
 - docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=YOURPASSWORD postgres:15.1
+
 ```
 
 #### Creating Postgres roles :
@@ -32,3 +35,4 @@ CREATE USER test WITH PASSWORD 'test';
 CREATE DATABASE libraryapp_dev;
 CREATE DATABASE libraryapp_test;
 ```
+
