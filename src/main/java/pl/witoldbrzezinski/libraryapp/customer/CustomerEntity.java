@@ -48,6 +48,14 @@ public class CustomerEntity {
 
   @Version private Long version;
 
+  public CustomerEntity(String firstName, String lastName, Gender gender, LocalDate birthDate, String personalNumber) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
+    this.birthDate = birthDate;
+    this.personalNumber = personalNumber;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
