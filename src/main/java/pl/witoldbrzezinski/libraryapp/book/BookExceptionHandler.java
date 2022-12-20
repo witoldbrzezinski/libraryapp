@@ -36,10 +36,5 @@ public class BookExceptionHandler {
         HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(SQLException.class)
-  public ResponseEntity<HandledExceptionResponse> handleSQLException(SQLException exception) {
-    return new ResponseEntity<>(
-        new HandledExceptionResponse(LocalDateTime.now(), exception.getMessage().split("\n")[0]),
-        HttpStatus.BAD_REQUEST);
-  }
+
 }
