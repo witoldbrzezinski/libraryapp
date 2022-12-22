@@ -43,7 +43,7 @@ public class BookEntity {
 
   private boolean isDeleted;
 
-  private String uuid = UUID.randomUUID().toString();
+  private final String uuid = UUID.randomUUID().toString();
 
   @Version private Long version;
 

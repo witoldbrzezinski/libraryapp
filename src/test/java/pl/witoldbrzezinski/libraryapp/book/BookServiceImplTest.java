@@ -43,7 +43,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     List<BookEntity> books = List.of(bookEntity);
     BookDTOResponse bookDTOResponse =
@@ -74,7 +73,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     // when
     when(bookRepository.findById(ID)).thenReturn(Optional.of(bookEntity));
@@ -98,7 +96,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     // when
     when(bookRepository.save(any(BookEntity.class))).thenReturn(bookEntity);
@@ -122,7 +119,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     // when
     when(bookRepository.save(bookMapper.toEntity(bookDTORequest))).thenReturn(bookEntity);
@@ -154,7 +150,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     // when
     bookEntity.setAuthor("Big Five");
@@ -180,7 +175,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     // when
     bookEntity.setAuthor("Big Five");
@@ -202,7 +196,6 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     // when
     when(bookRepository.findById(ID)).thenReturn(Optional.of(bookEntity));

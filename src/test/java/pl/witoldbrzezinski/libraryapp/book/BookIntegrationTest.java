@@ -42,7 +42,6 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
@@ -84,7 +83,6 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     BookDTOResponse bookDTOResponse =
         new BookDTOResponse(
@@ -151,7 +149,6 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     bookRepository.save(bookEntity);
     BookDTORequest bookDTORequest =
@@ -189,7 +186,6 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             "9780131969452-10000",
             false,
-            "f838128d-cf5d-4fcc-a2d7-86954940c0ef",
             0L);
     bookRepository.save(bookEntity);
     // when then
