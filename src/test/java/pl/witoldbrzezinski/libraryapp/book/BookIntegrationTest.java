@@ -115,25 +115,14 @@ class BookIntegrationTest extends IntegrationTestDB {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
-    BookDTOResponse bookDTOResponse =
-        new BookDTOResponse(
-            1L,
-            "9780131969452",
-            "Design Patterns",
-            "Big Four",
-            Genre.DRAMA,
-            "9780131969452-10000",
-            false,
-            0L);
     // when//then
-    MvcResult result =
-        mockMvc
-            .perform(
-                post("/books")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(bookDTORequest)))
-            .andExpect(status().isCreated())
-            .andReturn();
+    mockMvc
+        .perform(
+            post("/books")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(bookDTORequest)))
+        .andExpect(status().isCreated())
+        .andReturn();
   }
 
   @Test
@@ -153,16 +142,6 @@ class BookIntegrationTest extends IntegrationTestDB {
     bookRepository.save(bookEntity);
     BookDTORequest bookDTORequest =
         new BookDTORequest("9780131969452", "Design Patterns", "Big Five", Genre.DRAMA);
-    BookDTOResponse bookDTOResponse =
-        new BookDTOResponse(
-            1L,
-            "9780131969452",
-            "Design Patterns",
-            "Big Five",
-            Genre.DRAMA,
-            "9780131969452-10000",
-            false,
-            0L);
     // when then
     mockMvc
         .perform(

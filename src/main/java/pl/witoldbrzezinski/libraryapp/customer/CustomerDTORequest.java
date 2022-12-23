@@ -13,8 +13,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class CustomerDTORequest {
 
-
-    private String firstName;
-    private String lastName;
-    private String personalNumber;
+  private String firstName;
+  private String lastName;
+  private String personalNumber;
 }

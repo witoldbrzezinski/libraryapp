@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,12 +15,12 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 public class CustomerDTOResponse {
 
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private Gender gender;
-    private LocalDate birthDate;
-    private String personalNumber;
-    private boolean isDeleted;
-    @EqualsAndHashCode.Exclude private Long version;
+  private Long id;
+  private String firstName;
+  private String lastName;
+  private Gender gender;
+  private LocalDate birthDate;
+  private String personalNumber;
+  private boolean isDeleted;
+  @EqualsAndHashCode.Exclude private Long version;
 }

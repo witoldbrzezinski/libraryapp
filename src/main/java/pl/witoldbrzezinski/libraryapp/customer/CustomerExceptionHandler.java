@@ -4,12 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import pl.witoldbrzezinski.libraryapp.book.BookAlreadyExistException;
-import pl.witoldbrzezinski.libraryapp.book.BookNotFoundException;
-import pl.witoldbrzezinski.libraryapp.book.InvalidIsbnException;
 import pl.witoldbrzezinski.libraryapp.utils.HandledExceptionResponse;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -38,5 +34,4 @@ public class CustomerExceptionHandler {
         new HandledExceptionResponse(LocalDateTime.now(), exception.getMessage()),
         HttpStatus.BAD_REQUEST);
   }
-
 }

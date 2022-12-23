@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     if (customerRepository.existsByPersonalNumber(customerDTORequest.getPersonalNumber())) {
       throw new CustomerAlreadyExistException(customerDTORequest.getPersonalNumber());
     }
-    if(!personalNumberValidator.isValid(customerDTORequest.getPersonalNumber())){
+    if (!personalNumberValidator.isValid(customerDTORequest.getPersonalNumber())) {
       throw new InvalidPersonalNumberException(customerDTORequest.getPersonalNumber());
     }
     CustomerEntity customerEntity = customerMapper.toEntity(customerDTORequest);
@@ -42,11 +42,11 @@ public class CustomerServiceImpl implements CustomerService {
   @Override
   @Transactional
   public CustomerDTOResponse update(Long id, CustomerDTORequest customerDTORequest) {
-    if(!personalNumberValidator.isValid(customerDTORequest.getPersonalNumber())){
+    if (!personalNumberValidator.isValid(customerDTORequest.getPersonalNumber())) {
       throw new InvalidPersonalNumberException(customerDTORequest.getPersonalNumber());
     }
     CustomerEntity customerEntity =
-            customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
+        customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
     customerEntity.setFirstName(customerDTORequest.getFirstName());
     customerEntity.setLastName(customerDTORequest.getLastName());
     customerEntity.setPersonalNumber(customerDTORequest.getPersonalNumber());
@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
   @Transactional
   public void delete(Long id) {
     CustomerEntity customerEntity =
-            customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
+        customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
     customerEntity.setDeleted(true);
   }
 }

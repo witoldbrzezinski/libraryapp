@@ -52,7 +52,7 @@ public class BookServiceImpl implements BookService {
       throw new InvalidIsbnException(bookDTORequest.getIsbn());
     }
     BookEntity bookEntity =
-            bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
     bookEntity.setTitle(bookDTORequest.getTitle());
     bookEntity.setAuthor(bookDTORequest.getAuthor());

@@ -2,8 +2,6 @@ package pl.witoldbrzezinski.libraryapp.customer;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import pl.witoldbrzezinski.libraryapp.book.BookEntity;
-import pl.witoldbrzezinski.libraryapp.book.Genre;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -139,70 +137,72 @@ class CustomerServiceImplTest {
   }
 
   @Test
-  void shouldUpdateCustomer(){
-    //given
+  void shouldUpdateCustomer() {
+    // given
     CustomerDTORequest customerDTORequest =
-            new CustomerDTORequest(FIRST_NAME, LAST_NAME, PERSONAL_NUMBER);
+        new CustomerDTORequest(FIRST_NAME, LAST_NAME, PERSONAL_NUMBER);
     CustomerEntity customerEntity =
-            new CustomerEntity(
-                    ID,
-                    FIRST_NAME,
-                    LAST_NAME,
-                    Gender.MALE,
-                    LocalDate.of(1989, Month.SEPTEMBER, 12),
-                    PERSONAL_NUMBER,
-                    false,
-                    1L);
-    //when
+        new CustomerEntity(
+            ID,
+            FIRST_NAME,
+            LAST_NAME,
+            Gender.MALE,
+            LocalDate.of(1989, Month.SEPTEMBER, 12),
+            PERSONAL_NUMBER,
+            false,
+            1L);
+    // when
     customerEntity.setFirstName(NEW_FIRST_NAME);
     when(customerRepository.findById(ID)).thenReturn(Optional.of(customerEntity));
-    when(customerRepository.save(customerMapper.toEntity(customerDTORequest))).thenReturn(customerEntity);
-    //then
+    when(customerRepository.save(customerMapper.toEntity(customerDTORequest)))
+        .thenReturn(customerEntity);
+    // then
     assertThat(customerService.update(ID, customerDTORequest))
-            .usingRecursiveComparison()
-            .isEqualTo(customerMapper.toDTO(customerEntity));
+        .usingRecursiveComparison()
+        .isEqualTo(customerMapper.toDTO(customerEntity));
   }
+
   @Test
-  void shouldThrowExceptionWhenUpdatingCustomerWithInvalidPersonalNumber(){
-    //given
+  void shouldThrowExceptionWhenUpdatingCustomerWithInvalidPersonalNumber() {
+    // given
     CustomerDTORequest customerDTORequest =
-            new CustomerDTORequest(FIRST_NAME, LAST_NAME, PERSONAL_NUMBER+1);
+        new CustomerDTORequest(FIRST_NAME, LAST_NAME, PERSONAL_NUMBER + 1);
     CustomerEntity customerEntity =
-            new CustomerEntity(
-                    ID,
-                    FIRST_NAME,
-                    LAST_NAME,
-                    Gender.MALE,
-                    LocalDate.of(1989, Month.SEPTEMBER, 12),
-                    PERSONAL_NUMBER+1,
-                    false,
-                    1L);
-    //when
+        new CustomerEntity(
+            ID,
+            FIRST_NAME,
+            LAST_NAME,
+            Gender.MALE,
+            LocalDate.of(1989, Month.SEPTEMBER, 12),
+            PERSONAL_NUMBER + 1,
+            false,
+            1L);
+    // when
     customerEntity.setFirstName(NEW_FIRST_NAME);
     when(customerRepository.findById(ID)).thenReturn(Optional.of(customerEntity));
-    when(customerRepository.save(customerMapper.toEntity(customerDTORequest))).thenReturn(customerEntity);
-    //then
+    when(customerRepository.save(customerMapper.toEntity(customerDTORequest)))
+        .thenReturn(customerEntity);
+    // then
     assertThrowsExactly(
-            InvalidPersonalNumberException.class, () -> customerService.update(ID,customerDTORequest));
+        InvalidPersonalNumberException.class, () -> customerService.update(ID, customerDTORequest));
   }
 
   @Test
   void shouldDeleteCustomer() {
     // given
     CustomerEntity customerEntity =
-            new CustomerEntity(
-                    ID,
-                    FIRST_NAME,
-                    LAST_NAME,
-                    Gender.MALE,
-                    LocalDate.of(1989, Month.SEPTEMBER, 12),
-                    PERSONAL_NUMBER+1,
-                    false,
-                    1L);    // when
+        new CustomerEntity(
+            ID,
+            FIRST_NAME,
+            LAST_NAME,
+            Gender.MALE,
+            LocalDate.of(1989, Month.SEPTEMBER, 12),
+            PERSONAL_NUMBER + 1,
+            false,
+            1L); // when
     when(customerRepository.findById(ID)).thenReturn(Optional.of(customerEntity));
     customerService.delete(ID);
     // then
     assertTrue(customerEntity.isDeleted());
   }
-
 }
