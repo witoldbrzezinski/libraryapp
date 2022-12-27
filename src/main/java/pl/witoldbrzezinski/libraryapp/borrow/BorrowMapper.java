@@ -2,7 +2,10 @@ package pl.witoldbrzezinski.libraryapp.borrow;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
+
+import javax.print.attribute.standard.Destination;
 
 @Component
 @RequiredArgsConstructor
@@ -19,4 +22,5 @@ public class BorrowMapper {
       BorrowDtoRequest borrowDtoRequest) {
     return modelMapper.map(borrowDtoRequest,BorrowEntity.class);
   }
+
 }

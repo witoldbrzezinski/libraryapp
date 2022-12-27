@@ -19,4 +19,14 @@ public class BorrowController {
     public List<BorrowDTOResponse> getCustomerBorrows(@PathVariable Long customerId){
         return borrowService.getCustomerBorrows(customerId);
     }
+
+    @GetMapping("/books/{bookId}")
+    public List<BorrowDTOResponse> getBookBorrows(@PathVariable Long bookId){
+        return borrowService.getBookBorrows(bookId);
+    }
+
+    @GetMapping("/{id}")
+    public BorrowDTOResponse getById(@PathVariable Long id){
+        return borrowService.getById(id);
+    }
 }

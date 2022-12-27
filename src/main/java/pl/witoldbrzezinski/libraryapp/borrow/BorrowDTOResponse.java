@@ -17,7 +17,11 @@ import java.time.LocalDate;
 public class BorrowDTOResponse {
 
   @NotNull private Long bookId;
+  @NotNull private String bookTitle;
+  @NotNull private String bookIndex;
   @NotNull private Long customerId;
+  @NotNull private String customerFirstName;
+  @NotNull private String customerLastName;
   @NotNull private LocalDate returnDate;
   private Long version;
 }
