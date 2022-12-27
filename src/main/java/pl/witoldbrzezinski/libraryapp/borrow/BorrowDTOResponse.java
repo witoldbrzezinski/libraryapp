@@ -5,8 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.witoldbrzezinski.libraryapp.book.BookEntity;
-import pl.witoldbrzezinski.libraryapp.customer.CustomerEntity;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -18,9 +16,8 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 public class BorrowDTOResponse {
 
-  @NotNull private BookEntity bookEntity;
-  @NotNull private CustomerEntity customerEntity;
+  @NotNull private Long bookId;
+  @NotNull private Long customerId;
   @NotNull private LocalDate returnDate;
-  private boolean isDeleted;
   private Long version;
 }

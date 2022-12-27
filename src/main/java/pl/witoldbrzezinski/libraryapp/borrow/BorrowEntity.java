@@ -34,11 +34,11 @@ public class BorrowEntity {
 
   @ManyToOne
   @JoinColumn(name = "book_id")
-  private BookEntity bookEntity;
+  private BookEntity book;
 
   @ManyToOne
   @JoinColumn(name = "customer_id")
-  private CustomerEntity customerEntity;
+  private CustomerEntity customer;
 
   private LocalDate returnDate;
   private boolean isDeleted;
