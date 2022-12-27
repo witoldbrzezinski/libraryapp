@@ -34,8 +34,23 @@ public class BorrowServiceImpl implements BorrowService {
 
     @Override
     public BorrowDTOResponse getById(Long id) {
-        BorrowEntity borrowEntity = borrowRepository.findById(id).orElseThrow(()-> new BorrowNotFoundException(id));
+        BorrowEntity borrowEntity = findBorrow(id);
         return borrowMapper.toDTO(borrowEntity);
+    }
+
+    @Override
+    public BorrowDTOResponse save(BorrowDtoRequest borrowDtoRequest) {
+        CustomerEntity customer = findCustomer(borrowDtoRequest.getCustomerId());
+        BookEntity book = findBook(borrowDtoRequest.getBookId());
+        BorrowEntity borrow = borrowMapper.toEntity(borrowDtoRequest);
+        customer.addBorrow(borrow);
+        book.addBorrow(borrow);
+        borrowRepository.save(borrow);
+        return borrowMapper.toDTO(borrow);
+    }
+
+    private BorrowEntity findBorrow(Long id){
+        return borrowRepository.findById(id).orElseThrow(()-> new BorrowNotFoundException(id));
     }
 
 

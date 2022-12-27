@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 import pl.witoldbrzezinski.libraryapp.borrow.BorrowEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -46,7 +47,9 @@ public class CustomerEntity {
 
   private String personalNumber;
 
-  @OneToMany
+  @OneToMany(
+          mappedBy = "customer",
+          cascade = CascadeType.MERGE)
   private Set<BorrowEntity> borrows = new HashSet<>();
 
   private boolean isDeleted;
@@ -68,6 +71,15 @@ public class CustomerEntity {
     this.personalNumber = personalNumber;
   }
 
+  public void addBorrow(BorrowEntity borrow) {
+    borrow.setCustomer(this);
+    borrows.add(borrow);
+  }
+
+  public void removeBorrow(BorrowEntity borrow) {
+    borrow.setCustomer(null);
+    borrows.remove(borrow);
+  }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

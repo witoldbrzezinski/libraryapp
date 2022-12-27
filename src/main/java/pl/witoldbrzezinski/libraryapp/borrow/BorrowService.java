@@ -10,4 +10,8 @@ public interface BorrowService {
     List<BorrowDTOResponse> getBookBorrows(Long bookId);
 
     BorrowDTOResponse getById(Long id);
+
+    BorrowDTOResponse save(BorrowDtoRequest borrowDtoRequest);
+
+
 }

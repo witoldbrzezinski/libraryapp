@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 import pl.witoldbrzezinski.libraryapp.borrow.BorrowEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -44,9 +45,13 @@ public class BookEntity {
   private Genre genre;
 
   private String index;
+
   @Enumerated(EnumType.STRING)
   private Status status;
-  @OneToMany
+
+  @OneToMany(
+      mappedBy = "book",
+      cascade = CascadeType.MERGE)
   private Set<BorrowEntity> borrows = new HashSet<>();
 
   private boolean isDeleted;
@@ -54,6 +59,16 @@ public class BookEntity {
   private final String uuid = UUID.randomUUID().toString();
 
   @Version private Long version;
+
+  public void addBorrow(BorrowEntity borrow) {
+    borrow.setBook(this);
+    borrows.add(borrow);
+  }
+
+  public void removeBorrow(BorrowEntity borrow) {
+    borrow.setBook(null);
+    borrows.remove(borrow);
+  }
 
   @Override
   public boolean equals(Object o) {
