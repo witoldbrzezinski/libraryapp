@@ -48,13 +48,12 @@ public class BookServiceImpl implements BookService {
   @Override
   @Transactional
   public BookDTOResponse update(Long id, BookDTORequest bookDTORequest) {
-    BookEntity bookEntity =
-        bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     if (!isbnValidator.isValid(bookDTORequest.getIsbn())) {
       throw new InvalidIsbnException(bookDTORequest.getIsbn());
-    } else {
-      bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
     }
+    BookEntity bookEntity =
+        bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+    bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
     bookEntity.setTitle(bookDTORequest.getTitle());
     bookEntity.setAuthor(bookDTORequest.getAuthor());
     bookEntity.setGenre(bookDTORequest.getGenre());

@@ -1,4 +1,4 @@
-package pl.witoldbrzezinski.libraryapp.book;
+package pl.witoldbrzezinski.libraryapp.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,32 +14,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "customers")
 @Getter
 @Setter
-@Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "is_deleted = false")
-public class BookEntity {
+public class CustomerEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String isbn;
+  private String firstName;
 
-  private String title;
-
-  private String author;
+  private String lastName;
 
   @Enumerated(EnumType.STRING)
-  private Genre genre;
+  private Gender gender;
 
-  private String index;
+  private LocalDate birthDate;
+
+  private String personalNumber;
 
   private boolean isDeleted;
 
@@ -47,12 +48,25 @@ public class BookEntity {
 
   @Version private Long version;
 
+  public CustomerEntity(
+      String firstName,
+      String lastName,
+      Gender gender,
+      LocalDate birthDate,
+      String personalNumber) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
+    this.birthDate = birthDate;
+    this.personalNumber = personalNumber;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    BookEntity that = (BookEntity) o;
-    return Objects.equals(uuid, that.uuid);
+    CustomerEntity that = (CustomerEntity) o;
+    return uuid.equals(that.uuid);
   }
 
   @Override
