@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
+import pl.witoldbrzezinski.libraryapp.borrow.BorrowEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,10 +13,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -41,6 +45,9 @@ public class CustomerEntity {
   private LocalDate birthDate;
 
   private String personalNumber;
+
+  @OneToMany
+  private Set<BorrowEntity> borrows = new HashSet<>();
 
   private boolean isDeleted;
 

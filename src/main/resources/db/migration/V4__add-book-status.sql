@@ -1,0 +1,2 @@
+ALTER TABLE books ADD status VARCHAR(20) DEFAULT 'FREE';
+
