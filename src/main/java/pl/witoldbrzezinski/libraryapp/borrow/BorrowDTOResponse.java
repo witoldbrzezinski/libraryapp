@@ -22,6 +22,8 @@ public class BorrowDTOResponse {
   @NotNull private Long customerId;
   @NotNull private String customerFirstName;
   @NotNull private String customerLastName;
+
+  @NotNull private LocalDate borrowDate;
   @NotNull private LocalDate returnDate;
   private Long version;
 }

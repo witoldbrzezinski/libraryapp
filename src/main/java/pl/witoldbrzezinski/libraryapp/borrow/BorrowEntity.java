@@ -40,6 +40,7 @@ public class BorrowEntity {
   @JoinColumn(name = "customer_id")
   private CustomerEntity customer;
 
+  private final LocalDate borrowDate = LocalDate.now();
   private LocalDate returnDate;
   private boolean isDeleted;
 

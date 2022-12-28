@@ -57,6 +57,7 @@ public class BookServiceImpl implements BookService {
     bookEntity.setTitle(bookDTORequest.getTitle());
     bookEntity.setAuthor(bookDTORequest.getAuthor());
     bookEntity.setGenre(bookDTORequest.getGenre());
+    bookEntity.setStatus(bookDTORequest.getStatus());
     return bookMapper.toDTO(bookEntity);
   }
 

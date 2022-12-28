@@ -13,5 +13,9 @@ public interface BorrowService {
 
     BorrowDTOResponse save(BorrowDtoRequest borrowDtoRequest);
 
+    BorrowDTOResponse update(Long id, BorrowDtoRequest borrowDtoRequest);
+
+    void delete(Long id);
+
 
 }
