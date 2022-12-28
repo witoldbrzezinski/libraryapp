@@ -19,9 +19,11 @@ public class BookDTORequest {
   @NotNull private String isbn;
   @NotNull private String title;
   @NotNull private String author;
+
   @Enumerated(EnumType.STRING)
   @NotNull
   private Genre genre;
+
   @Enumerated(EnumType.STRING)
   @NotNull
   private Status status;

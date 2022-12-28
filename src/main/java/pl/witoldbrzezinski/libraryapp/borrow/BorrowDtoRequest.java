@@ -15,11 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class BorrowDtoRequest {
-    @NotNull
-    private Long bookId;
-    @NotNull
-    private Long customerId;
-    @NotNull
-    private LocalDate returnDate;
-
+  @NotNull private Long bookId;
+  @NotNull private Long customerId;
+  @NotNull private LocalDate returnDate;
 }

@@ -32,7 +32,8 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldGetBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     BookEntity bookEntity =
         new BookEntity(
             1L,
@@ -41,6 +42,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     BookDTOResponse bookDTOResponse =
@@ -50,6 +52,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
+            Status.FREE,
             "9780131969452-10000",
             false,
             0L);
@@ -73,7 +76,8 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldGetAllBooks() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     BookEntity bookEntity =
         new BookEntity(
             1L,
@@ -82,6 +86,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     BookDTOResponse bookDTOResponse =
@@ -91,6 +96,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
+            Status.FREE,
             "9780131969452-10000",
             false,
             0L);
@@ -114,7 +120,8 @@ class BookIntegrationTest extends IntegrationTestDB {
   void shouldSaveBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     // when//then
     mockMvc
         .perform(
@@ -137,11 +144,13 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Big Five",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     bookRepository.save(bookEntity);
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Five", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Five", Genre.DRAMA, Status.FREE);
     // when then
     mockMvc
         .perform(
@@ -164,6 +173,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             "Big Five",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     bookRepository.save(bookEntity);

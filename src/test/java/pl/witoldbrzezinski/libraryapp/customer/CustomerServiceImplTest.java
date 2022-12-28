@@ -1,7 +1,6 @@
 package pl.witoldbrzezinski.libraryapp.customer;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -12,6 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CustomerServiceImplTest {
@@ -22,7 +22,7 @@ class CustomerServiceImplTest {
   private static final String PERSONAL_NUMBER = "89091206218";
   private static final long ID = 1L;
 
-  private final CustomerRepository customerRepository = Mockito.mock(CustomerRepository.class);
+  private final CustomerRepository customerRepository = mock(CustomerRepository.class);
   private final CustomerMapper customerMapper = new CustomerMapper(new PersonalNumberValidator());
   private final CustomerService customerService =
       new CustomerServiceImpl(customerRepository, customerMapper, new PersonalNumberValidator());

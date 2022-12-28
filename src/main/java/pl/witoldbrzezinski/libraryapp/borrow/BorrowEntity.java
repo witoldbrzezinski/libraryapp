@@ -46,5 +46,4 @@ public class BorrowEntity {
 
   private final String uuid = UUID.randomUUID().toString();
   @Version private Long version;
-
 }

@@ -47,9 +47,7 @@ public class CustomerEntity {
 
   private String personalNumber;
 
-  @OneToMany(
-          mappedBy = "customer",
-          cascade = CascadeType.MERGE)
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
   private Set<BorrowEntity> borrows = new HashSet<>();
 
   private boolean isDeleted;
@@ -71,6 +69,25 @@ public class CustomerEntity {
     this.personalNumber = personalNumber;
   }
 
+  public CustomerEntity(
+      Long id,
+      String firstName,
+      String lastName,
+      Gender gender,
+      LocalDate birthDate,
+      String personalNumber,
+      boolean isDeleted,
+      Long version) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
+    this.birthDate = birthDate;
+    this.personalNumber = personalNumber;
+    this.isDeleted = isDeleted;
+    this.version = version;
+  }
+
   public void addBorrow(BorrowEntity borrow) {
     borrow.setCustomer(this);
     borrows.add(borrow);
@@ -80,6 +97,7 @@ public class CustomerEntity {
     borrow.setCustomer(null);
     borrows.remove(borrow);
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -42,6 +42,7 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     List<BookEntity> books = List.of(bookEntity);
@@ -52,6 +53,7 @@ class BookServiceImplTest {
             "Design Patterns",
             "Big Four",
             Genre.DRAMA,
+            Status.FREE,
             "9780131969452-10000",
             false,
             0L);
@@ -72,6 +74,7 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     // when
@@ -86,7 +89,8 @@ class BookServiceImplTest {
   void shouldSaveBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -95,6 +99,7 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     // when
@@ -109,7 +114,7 @@ class BookServiceImplTest {
   @Test
   void shouldThrowExceptionWhenSavingWithInvalidIsbn() {
     BookDTORequest bookDTORequest =
-        new BookDTORequest("97801", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest("97801", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -118,6 +123,7 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     // when
@@ -130,7 +136,8 @@ class BookServiceImplTest {
   void shouldNotSaveAlreadyExistingBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     when(bookRepository.existsByIsbn("9780131969452")).thenReturn(true);
     // when then
     assertThrowsExactly(BookAlreadyExistException.class, () -> bookService.save(bookDTORequest));
@@ -140,7 +147,8 @@ class BookServiceImplTest {
   void shouldUpdateBook() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131969452", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest(
+            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -149,23 +157,24 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     // when
     bookEntity.setAuthor("Big Five");
     when(bookRepository.findById(ID)).thenReturn(Optional.of(bookEntity));
     when(bookRepository.save(bookMapper.toEntity(bookDTORequest))).thenReturn(bookEntity);
+    // then
     assertThat(bookService.update(ID, bookDTORequest))
         .usingRecursiveComparison()
         .isEqualTo(bookMapper.toDTO(bookEntity));
-    // then
   }
 
   @Test
   void shouldNotUpdateBookWhenIsbnIsIncorrect() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131", "Design Patterns", "Big Four", Genre.DRAMA);
+        new BookDTORequest("9780131", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -174,6 +183,7 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     // when
@@ -195,6 +205,7 @@ class BookServiceImplTest {
             "Big Four",
             Genre.DRAMA,
             "9780131969452-10000",
+            Status.FREE,
             false,
             0L);
     // when

@@ -49,9 +49,7 @@ public class BookEntity {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @OneToMany(
-      mappedBy = "book",
-      cascade = CascadeType.MERGE)
+  @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE)
   private Set<BorrowEntity> borrows = new HashSet<>();
 
   private boolean isDeleted;
@@ -59,6 +57,27 @@ public class BookEntity {
   private final String uuid = UUID.randomUUID().toString();
 
   @Version private Long version;
+
+  public BookEntity(
+      Long id,
+      String isbn,
+      String title,
+      String author,
+      Genre genre,
+      String index,
+      Status status,
+      boolean isDeleted,
+      Long version) {
+    this.id = id;
+    this.isbn = isbn;
+    this.title = title;
+    this.author = author;
+    this.genre = genre;
+    this.index = index;
+    this.status = status;
+    this.isDeleted = isDeleted;
+    this.version = version;
+  }
 
   public void addBorrow(BorrowEntity borrow) {
     borrow.setBook(this);
