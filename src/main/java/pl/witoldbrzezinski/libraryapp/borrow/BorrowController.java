@@ -32,7 +32,7 @@ public class BorrowController {
     return borrowService.getBookBorrows(bookId);
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("{id}")
   public BorrowDTOResponse getById(@PathVariable Long id) {
     return borrowService.getById(id);
   }
