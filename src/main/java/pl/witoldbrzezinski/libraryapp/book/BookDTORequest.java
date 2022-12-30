@@ -23,4 +23,8 @@ public class BookDTORequest {
   @Enumerated(EnumType.STRING)
   @NotNull
   private Genre genre;
+
+  @Enumerated(EnumType.STRING)
+  @NotNull
+  private Status status;
 }

@@ -5,16 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
+import pl.witoldbrzezinski.libraryapp.borrow.BorrowEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -41,11 +46,48 @@ public class BookEntity {
 
   private String index;
 
+  @Enumerated(EnumType.STRING)
+  private Status status;
+
+  @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE)
+  private Set<BorrowEntity> borrows = new HashSet<>();
+
   private boolean isDeleted;
 
   private final String uuid = UUID.randomUUID().toString();
 
   @Version private Long version;
+
+  public BookEntity(
+      Long id,
+      String isbn,
+      String title,
+      String author,
+      Genre genre,
+      String index,
+      Status status,
+      boolean isDeleted,
+      Long version) {
+    this.id = id;
+    this.isbn = isbn;
+    this.title = title;
+    this.author = author;
+    this.genre = genre;
+    this.index = index;
+    this.status = status;
+    this.isDeleted = isDeleted;
+    this.version = version;
+  }
+
+  public void addBorrow(BorrowEntity borrow) {
+    borrow.setBook(this);
+    borrows.add(borrow);
+  }
+
+  public void removeBorrow(BorrowEntity borrow) {
+    borrow.setBook(null);
+    borrows.remove(borrow);
+  }
 
   @Override
   public boolean equals(Object o) {

@@ -26,8 +26,11 @@ public class BookDTOResponse {
   @NotNull
   private Genre genre;
 
-  @NotNull private String index;
+  @Enumerated(EnumType.STRING)
+  @NotNull
+  private Status status;
 
+  @NotNull private String index;
   private boolean isDeleted;
   private Long version;
 }
