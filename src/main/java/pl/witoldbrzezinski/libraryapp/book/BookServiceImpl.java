@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.witoldbrzezinski.libraryapp.utils.IndexGenerator;
 
 import javax.transaction.Transactional;
+import java.time.Clock;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -16,6 +18,8 @@ public class BookServiceImpl implements BookService {
   private final BookMapper bookMapper;
 
   private final IsbnValidator isbnValidator;
+
+  private final Clock clock;
 
   @Override
   public List<BookDTOResponse> getAll() {
@@ -41,6 +45,7 @@ public class BookServiceImpl implements BookService {
     bookEntity.setIsbn(bookDTORequest.getIsbn().replaceAll("-", ""));
     bookEntity.setIndex(
         bookDTORequest.getIsbn().replaceAll("-", "") + "-" + IndexGenerator.generateRandomIndex());
+    bookEntity.setEndOfLastBorrow(LocalDate.now(clock).plusMonths(1));
     bookRepository.save(bookEntity);
     return bookMapper.toDTO(bookEntity);
   }
@@ -58,6 +63,7 @@ public class BookServiceImpl implements BookService {
     bookEntity.setAuthor(bookDTORequest.getAuthor());
     bookEntity.setGenre(bookDTORequest.getGenre());
     bookEntity.setStatus(bookDTORequest.getStatus());
+    bookEntity.setEndOfLastBorrow(bookDTORequest.getEndOfLastBorrow());
     return bookMapper.toDTO(bookEntity);
   }
 

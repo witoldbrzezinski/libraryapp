@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -49,6 +50,8 @@ public class BookEntity {
   @Enumerated(EnumType.STRING)
   private Status status;
 
+  private LocalDate endOfLastBorrow;
+
   @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE)
   private Set<BorrowEntity> borrows = new HashSet<>();
 
@@ -75,6 +78,29 @@ public class BookEntity {
     this.genre = genre;
     this.index = index;
     this.status = status;
+    this.isDeleted = isDeleted;
+    this.version = version;
+  }
+
+  public BookEntity(
+          Long id,
+          String isbn,
+          String title,
+          String author,
+          Genre genre,
+          String index,
+          Status status,
+          LocalDate endOfLastBorrow,
+          boolean isDeleted,
+          Long version) {
+    this.id = id;
+    this.isbn = isbn;
+    this.title = title;
+    this.author = author;
+    this.genre = genre;
+    this.index = index;
+    this.status = status;
+    this.endOfLastBorrow = endOfLastBorrow;
     this.isDeleted = isDeleted;
     this.version = version;
   }

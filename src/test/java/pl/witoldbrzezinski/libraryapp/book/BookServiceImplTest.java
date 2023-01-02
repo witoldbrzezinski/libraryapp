@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +27,15 @@ class BookServiceImplTest {
 
   private BookService bookService;
 
+  private Clock clock;
+
   @BeforeEach
   void init() {
     bookRepository = mock(BookRepository.class);
     bookMapper = new BookMapper(new ModelMapper());
     IsbnValidator isbnValidator = new IsbnValidator();
-    bookService = new BookServiceImpl(bookRepository, bookMapper, isbnValidator);
+    clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+    bookService = new BookServiceImpl(bookRepository, bookMapper, isbnValidator, clock);
   }
 
   @Test
@@ -43,6 +50,7 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             Status.FREE,
+            LocalDate.now(clock).plusMonths(1),
             false,
             0L);
     List<BookEntity> books = List.of(bookEntity);
@@ -55,6 +63,7 @@ class BookServiceImplTest {
             Genre.DRAMA,
             Status.FREE,
             "9780131969452-10000",
+            LocalDate.now(clock).plusMonths(1),
             false,
             0L);
     // when
@@ -90,7 +99,12 @@ class BookServiceImplTest {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock).plusMonths(1));
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -100,6 +114,7 @@ class BookServiceImplTest {
             Genre.DRAMA,
             "9780131969452-10000",
             Status.FREE,
+            LocalDate.now(clock).plusMonths(1),
             false,
             0L);
     // when
@@ -114,7 +129,8 @@ class BookServiceImplTest {
   @Test
   void shouldThrowExceptionWhenSavingWithInvalidIsbn() {
     BookDTORequest bookDTORequest =
-        new BookDTORequest("97801", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+        new BookDTORequest(
+            "97801", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE, LocalDate.now(clock).plusMonths(1));
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -137,7 +153,12 @@ class BookServiceImplTest {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock).plusMonths(1));
     when(bookRepository.existsByIsbn("9780131969452")).thenReturn(true);
     // when then
     assertThrowsExactly(BookAlreadyExistException.class, () -> bookService.save(bookDTORequest));
@@ -148,7 +169,12 @@ class BookServiceImplTest {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock));
     BookEntity bookEntity =
         new BookEntity(
             ID,
@@ -174,7 +200,13 @@ class BookServiceImplTest {
   void shouldNotUpdateBookWhenIsbnIsIncorrect() {
     // given
     BookDTORequest bookDTORequest =
-        new BookDTORequest("9780131", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+        new BookDTORequest(
+            "9780131",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock).plusMonths(1));
     BookEntity bookEntity =
         new BookEntity(
             ID,

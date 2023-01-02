@@ -12,6 +12,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import pl.witoldbrzezinski.libraryapp.IntegrationTestDB;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,6 +31,7 @@ class BookIntegrationTest extends IntegrationTestDB {
   @Autowired private BookRepository bookRepository;
   @Autowired private MockMvc mockMvc;
   @Autowired private ObjectMapper objectMapper;
+  private final Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
   @Test
   @SneakyThrows
@@ -33,7 +39,12 @@ class BookIntegrationTest extends IntegrationTestDB {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock));
     BookEntity bookEntity =
         new BookEntity(
             1L,
@@ -43,6 +54,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             "9780131969452-10000",
             Status.FREE,
+            LocalDate.now(clock),
             false,
             0L);
     BookDTOResponse bookDTOResponse =
@@ -54,6 +66,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             Status.FREE,
             "9780131969452-10000",
+            LocalDate.now(clock),
             false,
             0L);
     bookRepository.save(bookEntity);
@@ -77,7 +90,12 @@ class BookIntegrationTest extends IntegrationTestDB {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock));
     BookEntity bookEntity =
         new BookEntity(
             1L,
@@ -87,6 +105,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             "9780131969452-10000",
             Status.FREE,
+            LocalDate.now(clock),
             false,
             0L);
     BookDTOResponse bookDTOResponse =
@@ -98,6 +117,7 @@ class BookIntegrationTest extends IntegrationTestDB {
             Genre.DRAMA,
             Status.FREE,
             "9780131969452-10000",
+            LocalDate.now(clock),
             false,
             0L);
     bookRepository.save(bookEntity);
@@ -121,7 +141,12 @@ class BookIntegrationTest extends IntegrationTestDB {
     // given
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Four", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Four",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock));
     // when//then
     mockMvc
         .perform(
@@ -150,7 +175,12 @@ class BookIntegrationTest extends IntegrationTestDB {
     bookRepository.save(bookEntity);
     BookDTORequest bookDTORequest =
         new BookDTORequest(
-            "9780131969452", "Design Patterns", "Big Five", Genre.DRAMA, Status.FREE);
+            "9780131969452",
+            "Design Patterns",
+            "Big Five",
+            Genre.DRAMA,
+            Status.FREE,
+            LocalDate.now(clock));
     // when then
     mockMvc
         .perform(

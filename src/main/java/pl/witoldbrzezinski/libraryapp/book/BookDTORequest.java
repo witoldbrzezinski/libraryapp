@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -27,4 +28,6 @@ public class BookDTORequest {
   @Enumerated(EnumType.STRING)
   @NotNull
   private Status status;
+
+  private LocalDate endOfLastBorrow;
 }
