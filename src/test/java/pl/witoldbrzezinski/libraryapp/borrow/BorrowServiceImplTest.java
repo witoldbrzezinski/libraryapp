@@ -30,7 +30,7 @@ class BorrowServiceImplTest {
   private final BorrowRepository borrowRepository = mock(BorrowRepository.class);
   private final BookRepository bookRepository = mock(BookRepository.class);
   private final CustomerRepository customerRepository = mock(CustomerRepository.class);
-  private ModelMapper modelMapper = mock(ModelMapper.class);
+  private final ModelMapper modelMapper = mock(ModelMapper.class);
   private final BorrowMapper borrowMapper = new BorrowMapper(modelMapper);
   private final Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
   private final BorrowService borrowService =
