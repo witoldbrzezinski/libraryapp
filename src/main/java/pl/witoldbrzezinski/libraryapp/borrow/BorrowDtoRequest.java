@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -17,5 +18,5 @@ import java.time.LocalDate;
 public class BorrowDtoRequest {
   @NotNull private Long bookId;
   @NotNull private Long customerId;
-  @NotNull private LocalDate returnDate;
+  @NotNull @FutureOrPresent private LocalDate returnDate;
 }

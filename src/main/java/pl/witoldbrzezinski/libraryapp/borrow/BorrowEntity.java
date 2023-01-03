@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.Future;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -41,6 +42,7 @@ public class BorrowEntity {
   private CustomerEntity customer;
 
   private final LocalDate borrowDate = LocalDate.now();
+
   private LocalDate returnDate;
   private boolean isDeleted;
 

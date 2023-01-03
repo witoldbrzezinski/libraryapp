@@ -49,6 +49,18 @@ public class BorrowController {
     borrowService.update(id, borrowDtoRequest);
   }
 
+  @PutMapping("/borrow/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public void borrow(@PathVariable Long id, @Valid @RequestBody BorrowDtoRequest borrowDtoRequest) {
+    borrowService.borrow(id, borrowDtoRequest);
+  }
+
+  @PutMapping("/return/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public void returnBook(@PathVariable Long id, @Valid @RequestBody BorrowDtoRequest borrowDtoRequest) {
+    borrowService.returnBook(id, borrowDtoRequest);
+  }
+
   @DeleteMapping("{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable Long id) {
