@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -29,7 +30,7 @@ class BorrowServiceImplTest {
   private final BorrowRepository borrowRepository = mock(BorrowRepository.class);
   private final BookRepository bookRepository = mock(BookRepository.class);
   private final CustomerRepository customerRepository = mock(CustomerRepository.class);
-  private ModelMapper modelMapper = mock(ModelMapper.class);
+  private final ModelMapper modelMapper = mock(ModelMapper.class);
   private final BorrowMapper borrowMapper = new BorrowMapper(modelMapper);
   private final Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
   private final BorrowService borrowService =
@@ -227,16 +228,16 @@ class BorrowServiceImplTest {
   void shouldUpdateBorrow() {
     // given
     BookEntity bookEntity =
-        new BookEntity(
-            1L,
-            "9780131969452",
-            "Design Patterns",
-            "Big Four",
-            Genre.DRAMA,
-            "9780131969452-10000",
-            Status.FREE,
-            false,
-            0L);
+            new BookEntity(
+                    1L,
+                    "9780131969452",
+                    "Design Patterns",
+                    "Big Four",
+                    Genre.DRAMA,
+                    "9780131969452-10000",
+                    Status.FREE,
+                    false,
+                    0L);
     CustomerEntity customerEntity =
         new CustomerEntity(
             1L,
@@ -251,7 +252,7 @@ class BorrowServiceImplTest {
         new BorrowEntity(
             1L, bookEntity, customerEntity, LocalDate.now(fixedClock).plusMonths(1), false, 0L);
     BorrowDtoRequest borrowDtoRequest =
-        new BorrowDtoRequest(1L, 1L, LocalDate.now(fixedClock).plusMonths(1));
+        new BorrowDtoRequest(bookEntity.getId(), customerEntity.getId(), LocalDate.now(fixedClock).plusMonths(1));
     BorrowDTOResponse borrowDTOResponse =
         new BorrowDTOResponse(
             1L,
@@ -266,6 +267,7 @@ class BorrowServiceImplTest {
     borrowEntity.setReturnDate(LocalDate.now(fixedClock).plusMonths(2));
     // when
     when(borrowRepository.findById(1L)).thenReturn(Optional.of(borrowEntity));
+    when(bookRepository.findById(1L)).thenReturn(Optional.of(bookEntity));
     when(borrowMapper.toEntity(borrowDtoRequest)).thenReturn(borrowEntity);
     when(borrowMapper.toDTO(borrowEntity)).thenReturn(borrowDTOResponse);
     // then
@@ -306,5 +308,105 @@ class BorrowServiceImplTest {
     borrowService.delete(1L);
     // then
     assertTrue(borrowEntity.isDeleted());
+  }
+
+  @Test
+  void shouldBorrowBook(){
+    //given
+    BookEntity bookEntity =
+            new BookEntity(
+                    1L,
+                    "9780131969452",
+                    "Design Patterns",
+                    "Big Four",
+                    Genre.DRAMA,
+                    "9780131969452-10000",
+                    Status.FREE,
+                    false,
+                    0L);
+    CustomerEntity customerEntity =
+            new CustomerEntity(
+                    1L,
+                    "Witold",
+                    "Brzezinski",
+                    Gender.MALE,
+                    LocalDate.of(1989, Month.SEPTEMBER, 12),
+                    "89091206218",
+                    false,
+                    1L);
+    BorrowEntity borrowEntity =
+            new BorrowEntity(
+                    1L, bookEntity, customerEntity, LocalDate.now(fixedClock).plusMonths(1), false, 0L);
+    BorrowDtoRequest borrowDtoRequest =
+            new BorrowDtoRequest(bookEntity.getId(), customerEntity.getId(), LocalDate.now(fixedClock).plusMonths(1));
+    BorrowDTOResponse borrowDTOResponse =
+            new BorrowDTOResponse(
+                    1L,
+                    "Design Patterns",
+                    "9780131969452-10000",
+                    1L,
+                    "Witold",
+                    "Brzezinski",
+                    LocalDate.now(fixedClock),
+                    LocalDate.now(fixedClock).plusMonths(1),
+                    1L);
+    // when
+    when(borrowRepository.findById(1L)).thenReturn(Optional.of(borrowEntity));
+    when(bookRepository.findById(1L)).thenReturn(Optional.of(bookEntity));
+    when(borrowMapper.toEntity(borrowDtoRequest)).thenReturn(borrowEntity);
+    when(borrowMapper.toDTO(borrowEntity)).thenReturn(borrowDTOResponse);
+    borrowService.borrow(borrowEntity.getId(),borrowDtoRequest);
+    //then
+    assertEquals(bookEntity.getStatus(),Status.OCCUPIED);
+  }
+
+  @Test
+  void shouldChangeStatusWhenReturnBook(){
+    //given
+    BookEntity bookEntity =
+            new BookEntity(
+                    1L,
+                    "9780131969452",
+                    "Design Patterns",
+                    "Big Four",
+                    Genre.DRAMA,
+                    "9780131969452-10000",
+                    Status.OCCUPIED,
+                    false,
+                    0L);
+    CustomerEntity customerEntity =
+            new CustomerEntity(
+                    1L,
+                    "Witold",
+                    "Brzezinski",
+                    Gender.MALE,
+                    LocalDate.of(1989, Month.SEPTEMBER, 12),
+                    "89091206218",
+                    false,
+                    1L);
+    BorrowEntity borrowEntity =
+            new BorrowEntity(
+                    1L, bookEntity, customerEntity, LocalDate.now(fixedClock).plusMonths(1), false, 0L);
+    BorrowDtoRequest borrowDtoRequest =
+            new BorrowDtoRequest(bookEntity.getId(), customerEntity.getId(), LocalDate.now(fixedClock).plusMonths(1));
+    BorrowDTOResponse borrowDTOResponse =
+            new BorrowDTOResponse(
+                    1L,
+                    "Design Patterns",
+                    "9780131969452-10000",
+                    1L,
+                    "Witold",
+                    "Brzezinski",
+                    LocalDate.now(fixedClock),
+                    LocalDate.now(fixedClock).plusMonths(1),
+                    1L);
+    // when
+    when(borrowRepository.findById(1L)).thenReturn(Optional.of(borrowEntity));
+    when(bookRepository.findById(1L)).thenReturn(Optional.of(bookEntity));
+    when(borrowMapper.toEntity(borrowDtoRequest)).thenReturn(borrowEntity);
+    when(borrowMapper.toDTO(borrowEntity)).thenReturn(borrowDTOResponse);
+    borrowService.returnBook(borrowEntity.getId(),borrowDtoRequest);
+    //then
+    assertEquals(bookEntity.getStatus(),Status.FREE);
   }
 }

@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import pl.witoldbrzezinski.libraryapp.book.BookEntity;
 import pl.witoldbrzezinski.libraryapp.book.BookNotFoundException;
 import pl.witoldbrzezinski.libraryapp.book.BookRepository;
+import pl.witoldbrzezinski.libraryapp.book.Status;
 import pl.witoldbrzezinski.libraryapp.customer.CustomerEntity;
 import pl.witoldbrzezinski.libraryapp.customer.CustomerNotFoundException;
 import pl.witoldbrzezinski.libraryapp.customer.CustomerRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -46,6 +48,7 @@ public class BorrowServiceImpl implements BorrowService {
     BorrowEntity borrow = borrowMapper.toEntity(borrowDtoRequest);
     customer.addBorrow(borrow);
     book.addBorrow(borrow);
+    book.setEndOfLastBorrow(LocalDate.now().plusMonths(1));
     borrowRepository.save(borrow);
     return borrowMapper.toDTO(borrow);
   }
@@ -54,7 +57,9 @@ public class BorrowServiceImpl implements BorrowService {
   @Override
   public BorrowDTOResponse update(Long id, BorrowDtoRequest borrowDtoRequest) {
     BorrowEntity borrow = findBorrow(id);
+    BookEntity book = findBook(borrowDtoRequest.getBookId());
     borrow.setReturnDate(borrowDtoRequest.getReturnDate());
+    book.setEndOfLastBorrow(borrowDtoRequest.getReturnDate());
     return borrowMapper.toDTO(borrow);
   }
 
@@ -63,6 +68,22 @@ public class BorrowServiceImpl implements BorrowService {
   public void delete(Long id) {
     BorrowEntity borrow = findBorrow(id);
     borrow.setDeleted(true);
+  }
+  @Transactional
+  @Override
+  public BorrowDTOResponse borrow(Long id, BorrowDtoRequest borrowDtoRequest) {
+    BorrowEntity borrow = findBorrow(id);
+    BookEntity book = findBook(borrowDtoRequest.getBookId());
+    book.setStatus(Status.OCCUPIED);
+    return borrowMapper.toDTO(borrow);
+  }
+  @Transactional
+  @Override
+  public BorrowDTOResponse returnBook(Long id, BorrowDtoRequest borrowDtoRequest) {
+    BorrowEntity borrow = findBorrow(id);
+    BookEntity book = findBook(borrowDtoRequest.getBookId());
+    book.setStatus(Status.FREE);
+    return borrowMapper.toDTO(borrow);
   }
 
   private BorrowEntity findBorrow(Long id) {

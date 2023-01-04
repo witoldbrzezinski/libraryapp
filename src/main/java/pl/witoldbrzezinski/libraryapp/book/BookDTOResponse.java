@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -31,6 +32,8 @@ public class BookDTOResponse {
   private Status status;
 
   @NotNull private String index;
+
+  private LocalDate endOfLastBorrow;
   private boolean isDeleted;
   private Long version;
 }
