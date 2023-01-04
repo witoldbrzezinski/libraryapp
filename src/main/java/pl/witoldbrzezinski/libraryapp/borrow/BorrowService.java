@@ -15,4 +15,7 @@ public interface BorrowService {
   BorrowDTOResponse update(Long id, BorrowDtoRequest borrowDtoRequest);
 
   void delete(Long id);
+  BorrowDTOResponse borrow(Long id, BorrowDtoRequest borrowDtoRequest);
+  BorrowDTOResponse returnBook(Long id, BorrowDtoRequest borrowDtoRequest);
+
 }

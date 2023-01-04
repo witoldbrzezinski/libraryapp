@@ -45,7 +45,6 @@ class BorrowIntegrationTest extends IntegrationTestDB {
   @Autowired private MockMvc mockMvc;
   @Autowired private ObjectMapper objectMapper;
   private final Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-
   private BookEntity bookEntity;
   private CustomerEntity customerEntity;
   private BorrowEntity borrowEntity;
@@ -172,6 +171,36 @@ class BorrowIntegrationTest extends IntegrationTestDB {
     mockMvc
         .perform(
             put("/borrows/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(borrowDtoRequest)))
+        .andExpect(status().isOk())
+        .andReturn();
+  }
+
+  @Test
+  @SneakyThrows
+  void shouldBorrowABook() {
+    // given
+    borrowRepository.save(borrowEntity);
+    // when then
+    mockMvc
+        .perform(
+            put("/borrows/borrow/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(borrowDtoRequest)))
+        .andExpect(status().isOk())
+        .andReturn();
+  }
+
+  @Test
+  @SneakyThrows
+  void shouldReturnABook() {
+    // given
+    borrowRepository.save(borrowEntity);
+    // when then
+    mockMvc
+        .perform(
+            put("/borrows/return/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(borrowDtoRequest)))
         .andExpect(status().isOk())

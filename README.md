@@ -16,7 +16,6 @@ Spring Boot application for library.
 
 ```
 - docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=YOURPASSWORD postgres:15.1
-
 ```
 
 #### Creating Postgres roles :
@@ -35,3 +34,20 @@ CREATE USER test WITH PASSWORD 'test';
 CREATE DATABASE libraryapp_dev;
 CREATE DATABASE libraryapp_test;
 ```
+
+### Run : #
+
+There are two profiles for app development and testing:
+- dev
+- test
+
+To run application with dev profile use VM option: 
+```
+-Dspring.profiles.active=dev
+```
+### Endpoints : #
+
+![img.png](book.png)
+![img.png](customer.png)
+![img.png](borrow.png)
+
