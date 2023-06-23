@@ -1,4 +1,4 @@
-CREATE TABLE roles (
+CREATE TABLE users (
     id bigserial PRIMARY KEY,
     username VARCHAR (150) NOT NULL UNIQUE,
     password VARCHAR (120) NOT NULL,

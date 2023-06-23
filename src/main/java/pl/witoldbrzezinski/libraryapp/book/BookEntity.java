@@ -83,16 +83,16 @@ public class BookEntity {
   }
 
   public BookEntity(
-          Long id,
-          String isbn,
-          String title,
-          String author,
-          Genre genre,
-          String index,
-          Status status,
-          LocalDate endOfLastBorrow,
-          boolean isDeleted,
-          Long version) {
+      Long id,
+      String isbn,
+      String title,
+      String author,
+      Genre genre,
+      String index,
+      Status status,
+      LocalDate endOfLastBorrow,
+      boolean isDeleted,
+      Long version) {
     this.id = id;
     this.isbn = isbn;
     this.title = title;
