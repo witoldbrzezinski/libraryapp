@@ -47,6 +47,14 @@ public class UserEntity {
     this.password = password;
   }
 
+  public void addRole(RoleEntity roleEntity){
+    this.roles.add(roleEntity);
+  }
+
+  public void removeRole(RoleEntity roleEntity){
+    this.roles.remove(roleEntity);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
