@@ -56,7 +56,7 @@ public class SecurityConfiguration {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers(new AntPathRequestMatcher("/auth/register"))
+                auth.requestMatchers(new AntPathRequestMatcher("/auth/**"))
                     .permitAll()
                     .anyRequest()
                     .authenticated());

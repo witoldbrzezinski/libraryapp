@@ -28,7 +28,7 @@ public class UserEntity {
 
   private String password;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "user_role",
       joinColumns = @JoinColumn(name = "user_id"),
@@ -47,11 +47,11 @@ public class UserEntity {
     this.password = password;
   }
 
-  public void addRole(RoleEntity roleEntity){
+  public void addRole(RoleEntity roleEntity) {
     this.roles.add(roleEntity);
   }
 
-  public void removeRole(RoleEntity roleEntity){
+  public void removeRole(RoleEntity roleEntity) {
     this.roles.remove(roleEntity);
   }
 
