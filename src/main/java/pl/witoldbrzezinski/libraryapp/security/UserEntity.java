@@ -47,6 +47,14 @@ public class UserEntity {
     this.password = password;
   }
 
+  public UserEntity(Long id, String username, String email, String password, Set<RoleEntity> roles) {
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.roles = roles;
+  }
+
   public void addRole(RoleEntity roleEntity) {
     this.roles.add(roleEntity);
   }
