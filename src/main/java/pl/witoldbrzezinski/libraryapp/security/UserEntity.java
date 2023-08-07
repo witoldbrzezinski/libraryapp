@@ -1,15 +1,14 @@
 package pl.witoldbrzezinski.libraryapp.security;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter

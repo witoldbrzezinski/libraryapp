@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 class UserDetailsServiceImplTest {
 
   private static final String USERNAME = "username";
-  private static final String MAIL = "username@libraryapp.com";
+  private static final String EMAIL = "username@libraryapp.com";
   private static final String PASSWORD = "password";
   private static final String BAD_USERNAME = "bad_username";
   private UserRepository userRepository;
@@ -28,20 +28,26 @@ class UserDetailsServiceImplTest {
 
   @Test
   void shouldLoadUsernameByUsername() {
+    // given
     UserEntity user =
-        new UserEntity(1L, USERNAME, MAIL, PASSWORD, Set.of(new RoleEntity(Role.ROLE_USER)));
+        new UserEntity(1L, USERNAME, EMAIL, PASSWORD, Set.of(new RoleEntity(Role.ROLE_USER)));
+    // when
     when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
-    assertThat(user.getUsername()).isEqualTo(userDetailsService.loadUserByUsername(USERNAME).getUsername());
+    // then
+    assertThat(user.getUsername())
+        .isEqualTo(userDetailsService.loadUserByUsername(USERNAME).getUsername());
   }
 
   @Test
   void shouldThrowExceptionWhenLoadWrongUsername() {
+    // given
     UserEntity user =
-            new UserEntity(1L, "bad_username", MAIL, PASSWORD, Set.of(new RoleEntity(Role.ROLE_USER)));
+        new UserEntity(1L, "bad_username", EMAIL, PASSWORD, Set.of(new RoleEntity(Role.ROLE_USER)));
+
+    // when
     when(userRepository.findByUsername(BAD_USERNAME)).thenReturn(Optional.of(user));
+    // then
     assertThrowsExactly(
-            UsernameNotFoundException.class,()->userDetailsService.loadUserByUsername(USERNAME));
+        UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername(USERNAME));
   }
-
-
 }

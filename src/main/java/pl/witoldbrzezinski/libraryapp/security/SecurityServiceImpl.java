@@ -1,5 +1,7 @@
 package pl.witoldbrzezinski.libraryapp.security;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,14 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class SecurityServiceImpl implements SecurityService {
 
-  public static final String ROLE_NOT_FOUND = "Role not found!";
+  private static final String ROLE_NOT_FOUND = "Role not found!";
   private final AuthenticationManager authenticationManager;
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;

@@ -21,7 +21,7 @@ public class SecurityController {
   }
 
   @PostMapping("/login")
-  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseStatus(HttpStatus.OK)
   public UserDTOLoginResponse login(@Valid @RequestBody UserDTOLoginRequest userDTOLoginRequest) {
     return securityService.login(userDTOLoginRequest);
   }
