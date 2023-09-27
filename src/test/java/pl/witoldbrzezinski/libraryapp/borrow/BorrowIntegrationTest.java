@@ -45,16 +45,13 @@ class BorrowIntegrationTest extends IntegrationTestDB {
   @Autowired private MockMvc mockMvc;
   @Autowired private ObjectMapper objectMapper;
   private final Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-  private BookEntity bookEntity;
-  private CustomerEntity customerEntity;
   private BorrowEntity borrowEntity;
   private BorrowDtoRequest borrowDtoRequest;
   private BorrowDTOResponse borrowDTOResponse;
 
   @BeforeEach
   void init() {
-    bookEntity =
-        new BookEntity(
+    BookEntity bookEntity = new BookEntity(
             1L,
             "9780131969452",
             "Design Patterns",
@@ -65,8 +62,7 @@ class BorrowIntegrationTest extends IntegrationTestDB {
             false,
             0L);
     bookRepository.save(bookEntity);
-    customerEntity =
-        new CustomerEntity(
+    CustomerEntity customerEntity = new CustomerEntity(
             1L,
             "Witold",
             "Brzezinski",
