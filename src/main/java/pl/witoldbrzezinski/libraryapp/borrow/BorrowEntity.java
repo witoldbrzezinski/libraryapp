@@ -1,13 +1,7 @@
 package pl.witoldbrzezinski.libraryapp.borrow;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Where;
-import pl.witoldbrzezinski.libraryapp.book.BookEntity;
-import pl.witoldbrzezinski.libraryapp.customer.CustomerEntity;
-
+import java.time.LocalDate;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,9 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.constraints.Future;
-import java.time.LocalDate;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Where;
+import pl.witoldbrzezinski.libraryapp.book.BookEntity;
+import pl.witoldbrzezinski.libraryapp.customer.CustomerEntity;
 
 @Entity
 @Getter
